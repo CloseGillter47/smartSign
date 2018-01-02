@@ -1,0 +1,5 @@
+{
+    "DB_TEMP_MAX_SIZE": 100,
+    "APP_RUN_LOG": true,
+    "LOG_LEVEL": 4
+}

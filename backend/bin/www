@@ -1,0 +1,82 @@
+#!/usr/bin/env node
+"use strict";
+
+// 依赖模块
+var server = require("../backend/server");
+var debug = require("debug")("express:server");
+var http = require("http");
+
+// 创建 http server
+var httpPort = normalizePort(process.env.PORT || 8080);
+var app = server.Server.bootstrap().app;
+app.set("port", httpPort);
+var httpServer = http.createServer(app);
+
+// 监听提供的端口
+httpServer.listen(httpPort);
+
+// 添加错误处理
+httpServer.on("error", onError);
+
+// 开始监听端口
+httpServer.on("listening", onListening);
+
+
+/**
+ * 将端口转化成 number, string, 或者 false.
+ */
+function normalizePort(val) {
+  var port = parseInt(val, 10);
+
+  if (isNaN(port)) {
+    // 如果没法转换为数字端口，则直接返回
+    return val;
+  }
+
+  if (port >= 0) {
+    // 如果转换成的数字大于0，则返回转换后的结果
+    return port;
+  }
+
+  // 如果转换后都不能满足上面的条件，则返回false（PS:目测程序就以报错处理）
+  return false;
+}
+
+/**
+ * 处理监听到的 HTTP server 的 "error" 事件.
+ */
+function onError(error) {
+  if (error.syscall !== "listen") {
+    throw error;
+  }
+
+  var bind = typeof httpPort === "string"
+    ? "Pipe " + httpPort
+    : "Port " + httpPort;
+
+  // 处理某些类型的异常错误
+  switch (error.code) {
+    case "EACCES":
+      console.error(bind + " 需要提升权限");
+      process.exit(1);
+      break;
+    case "EADDRINUSE":
+      console.error(bind + " 端口已被占用");
+      process.exit(1);
+      break;
+    default:
+      throw error;
+  }
+}
+
+/**
+ * 处理监听到的 HTTP server 的 "listening" 事件.
+ */
+function onListening() {
+  var addr = httpServer.address();
+  var bind = typeof addr === "string"
+    ? "pipe " + addr
+    : "port " + addr.port;
+  debug("开始监听端口：" + bind);
+  console.log("[www]:: 启动脚本已执行，后台正在等待连接...");
+}

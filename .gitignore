@@ -1,0 +1,8 @@
+.DS_Store
+.idea/
+.vscode/
+dist/backend
+dist/frontend
+node_modules
+*.zip
+package-lock.json
