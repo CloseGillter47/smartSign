@@ -5,7 +5,10 @@ export interface iFiles {
     fileurl?: string;
 }
 export interface iFile {
-    filename: string;
-    fileurl: string;
+    fileId?: string;
+    upload?: string;
+    author?: string;
+    filename?: string;
+    fileurl?: string;
     lessiones?: Lession[];
 }

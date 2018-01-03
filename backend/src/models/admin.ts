@@ -1,5 +1,4 @@
 import * as PATH from "path";
-import * as _ from "lodash";
 
 import * as Util from "../utils/util";
 
@@ -52,7 +51,9 @@ export class AdminModel {
             if (_admin.username === admin.username) { return null }
         }
 
-        let newId = ~~this.Admines[this.Admines.length].id + 1;
+        let newId = Util.dateToLocalString(new Date(), "numbercut", 10);
+
+        newId !== this.Admines[this.Admines.length].id ? newId : ~~this.Admines[this.Admines.length].id + 1;
 
         Object.assign(admin, { id: newId });
 

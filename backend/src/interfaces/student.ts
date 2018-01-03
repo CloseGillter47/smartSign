@@ -1,4 +1,5 @@
 export interface Student {
+    id?: string;
     name?: string;
     pinyin?: string;
     idCard?: string;
