@@ -22,7 +22,7 @@ export class AdminModel {
     /**
      * 读取管理员配置文件
      */
-    private getAdmines() {
+    public getAdmines() {
 
         let admines = this.Admines = Util.GetFile(PATH.join(this.BASE_ROOT, 'main.json'), true, false);
 
@@ -45,6 +45,12 @@ export class AdminModel {
     public addAdmin(admin: Admin) {
 
         this.Admines = this.Admines || Util.GetFile(PATH.join(this.BASE_ROOT, 'main.json'), true, false);
+
+        // 限制同名用户
+        for (let _admin of this.Admines) {
+
+            if (_admin.username === admin.username) { return null }
+        }
 
         let newId = ~~this.Admines[this.Admines.length].id + 1;
 
@@ -71,6 +77,8 @@ export class AdminModel {
             }
         }
 
+        return null;
+
     }
 
     /**
@@ -86,6 +94,8 @@ export class AdminModel {
                 return _admin;
             }
         }
+
+        return null;
     }
 
     /**
@@ -103,5 +113,7 @@ export class AdminModel {
                 return this.setAdmines(this.Admines);
             }
         }
+
+        return null;
     }
 }

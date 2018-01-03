@@ -3,12 +3,12 @@
         "id": "2017122500",
         "username": "root",
         "password": "1234",
-        "promisse": "0000"
+        "permission": "0000"
     },
     {
         "id": "2017122501",
         "username": "admin",
         "password": "12345",
-        "promisse": "0001"
+        "permission": "0001"
     }
 ]

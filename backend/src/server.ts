@@ -6,6 +6,7 @@ import * as path from "path";
 import errorHandler = require("errorhandler");
 
 // 引入后台接口
+import { AdminApi } from "./api/admin";
 
 export class Server {
 
@@ -51,7 +52,7 @@ export class Server {
     });
 
     // 创建 API 路由
-    // HerosApi.create(router);
+    AdminApi.create(router);
 
     // 挂载 REST API
     this.app.use("/api", router);
