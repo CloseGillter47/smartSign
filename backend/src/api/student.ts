@@ -48,6 +48,10 @@ export class StudentApi {
 
     }
 
+    constructor() {
+
+    }
+
     public add(req: Request, res: Response, next: NextFunction) {
         // 创建
     }

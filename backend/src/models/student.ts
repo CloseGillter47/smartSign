@@ -28,7 +28,7 @@ export class StudentModel {
         return list;
     }
 
-    public setList(list: any[]) {
+    public setList(list: Student[]) {
 
         return Util.SetFile(PATH.join(this.BASE_ROOT, 'index.json'), list, true, false) || this.getList(this.LessionId);
     }

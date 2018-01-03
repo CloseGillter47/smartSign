@@ -3,13 +3,14 @@ const gulp = require("gulp"),
     gulpMocha = require("gulp-mocha"),
     runSequence = require("run-sequence"),
     sourceMaps = require("gulp-sourcemaps"),
-    tsc = require("gulp-typescript");
+    tsc = require("gulp-typescript"),
+    uglify = require("gulp-uglify");
 
 /**
  * 移除 dist 文件夹.
  */
 gulp.task("clean", (done) => {
-    return del(["dist/.bin","dist/backend"], done);
+    return del(["dist/.bin", "dist/backend"], done);
 });
 
 /**
@@ -24,6 +25,19 @@ gulp.task("copy", () => {
  * 创建 server 后台代码.
  */
 gulp.task("build:express", () => {
+    const project = tsc.createProject("backend/tsconfig.json");
+    const result = gulp.src("backend/src/**/*.ts")
+        .pipe(sourceMaps.init())
+        .pipe(project());
+    return result.js
+        .pipe(uglify())
+        .pipe(gulp.dest("dist/backend"));
+});
+
+/**
+ * 创建 server 后台代码.
+ */
+gulp.task("dev:express", () => {
     const project = tsc.createProject("backend/tsconfig.json");
     const result = gulp.src("backend/src/**/*.ts")
         .pipe(sourceMaps.init())
@@ -52,5 +66,5 @@ gulp.task("default", (done) => {
  * 发布产品
  */
 gulp.task("product", (done) => {
-    runSequence("clean", "copy", "build:express");
+    runSequence("clean", "copy", "dev:express");
 });
