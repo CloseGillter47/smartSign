@@ -9,7 +9,7 @@ import { Lession } from "../interfaces/lession";
 // model
 
 /**
- * @class HerosApi
+ * @class LessionApi
  */
 export class LessionApi {
 

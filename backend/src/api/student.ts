@@ -2,6 +2,7 @@
 import { NextFunction, Response, Request, Router } from "express";
 
 import { StudentModel } from "../models/student";
+import { MessageModel as Mes } from "../models/message";
 
 // model
 
@@ -49,28 +50,86 @@ export class StudentApi {
         });
 
     }
-    
+
     constructor() {
 
     }
 
     public add(req: Request, res: Response, next: NextFunction) {
-        // 创建
+
+        let _student = req.body.student;
+
+        let _lessionId = req.body.lessionid;
+
+        let _studentModel = new StudentModel(_lessionId);
+
+        let _studentes = _studentModel.getList();
+
+        if (_studentes) {
+
+            let _istudentes = _studentModel.addStudent(_student);
+
+            if (_istudentes) {
+
+                res.send(new Mes({ students: _istudentes }, "添加成功", 200).result());
+
+            } else {
+
+                res.send(new Mes({}, "添加失败", 401).result());
+
+            }
+
+        } else {
+
+            res.send(new Mes({}, "请求失败，找不到相关数据", 401).result());
+        }
+
     }
 
     public delete(req: Request, res: Response, next: NextFunction) {
+
+        let _student = req.body.student;
+
+        let _lessionId = req.body.lessionid;
+
+        let _studentModel = new StudentModel(_lessionId);
+
+        let _studentes = _studentModel.getList();
+
+        if (_studentes) {
+
+            let _istudentes = _studentModel.delStudent(_student);
+
+            if (_istudentes) {
+
+                res.send(new Mes({ students: _istudentes }, "删除成功", 200).result());
+
+            } else {
+
+                res.send(new Mes({}, "删除失败", 401).result());
+
+            }
+
+        } else {
+
+            res.send(new Mes({}, "请求失败，找不到相关数据", 401).result());
+        }
+
     }
 
 
     public get(req: Request, res: Response, next: NextFunction) {
+
     }
 
 
     public list(req: Request, res: Response, next: NextFunction) {
+
     }
 
 
     public update(req: Request, res: Response, next: NextFunction) {
+
     }
 
 }

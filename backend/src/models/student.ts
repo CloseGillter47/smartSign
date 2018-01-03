@@ -18,19 +18,20 @@ export class StudentModel {
 
         this.LessionId = lessionId;
 
-        this.getList(this.LessionId);
+        return this.getList();
+
     }
 
-    public getList(lessionId: string) {
+    public getList() {
 
-        let list = this.studentes = Util.GetFile(PATH.join(this.BASE_ROOT, lessionId + '.json'), true, false);
+        let list = this.studentes = Util.GetFile(PATH.join(this.BASE_ROOT, this.LessionId + '.json'), true, false);
 
         return list;
     }
 
     public setList(list: Student[]) {
 
-        return Util.SetFile(PATH.join(this.BASE_ROOT, 'index.json'), list, true, false) || this.getList(this.LessionId);
+        return Util.SetFile(PATH.join(this.BASE_ROOT, 'index.json'), list, true, false) || this.getList();
     }
 
     public addStudent(student: Student) {
