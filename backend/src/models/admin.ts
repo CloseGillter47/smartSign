@@ -3,10 +3,12 @@ import * as _ from "lodash";
 
 import * as Util from "../utils/util";
 
+import { Admin } from "../interfaces/admin";
+
 
 export class AdminModel {
 
-    private Admines: Array<any>;
+    private Admines: Array<Admin>;
 
     private BASE_ROOT: string;
 
@@ -31,7 +33,7 @@ export class AdminModel {
      * 写入管理员配置文件
      * @param list 写入的内容
      */
-    private setAdmines(list: any) {
+    private setAdmines(list: Array<Admin>) {
 
         return Util.SetFile(PATH.join(this.BASE_ROOT, 'index.json'), list, true, false) || this.getAdmines();
     }
@@ -40,7 +42,7 @@ export class AdminModel {
      * 添加管理员到配置文件中
      * @param admin 管理员信息
      */
-    public addAdmin(admin: any) {
+    public addAdmin(admin: Admin) {
 
         this.Admines = this.Admines || Util.GetFile(PATH.join(this.BASE_ROOT, 'main.json'), true, false);
 
@@ -57,7 +59,7 @@ export class AdminModel {
      * 删除管理员
      * @param admin 非root用户
      */
-    public delAdmin(admin: any) {
+    public delAdmin(admin: Admin) {
 
         for (let _idx in this.Admines) {
 
@@ -75,7 +77,7 @@ export class AdminModel {
      * 查询管理员
      * @param admin 需要查询的管理员
      */
-    public findAdmin(admin: any) {
+    public findAdmin(admin: Admin) {
 
         for (let _admin of this.Admines) {
 
@@ -90,14 +92,15 @@ export class AdminModel {
      * 更新管理员
      * @param admin 需要更新的管理员
      */
-    public updateAdmin(admin: any) {
+    public updateAdmin(admin: Admin) {
 
-        for (let _admin of this.Admines) {
+        for (let _idx in this.Admines) {
 
-            if (_admin.username === admin.username || _admin.id === _admin.id) {
+            if (this.Admines[_idx].id === admin.id) {
 
-                
-                return _admin;
+                this.Admines[_idx] = admin;
+
+                return this.setAdmines(this.Admines);
             }
         }
     }
