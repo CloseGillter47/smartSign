@@ -101,17 +101,17 @@ export class AdminApi {
         });
     }
 
-    protected adminModel: AdminModel;
+    protected static adminModel = new AdminModel();
 
     constructor() {
-        this.adminModel = new AdminModel();
+
     }
 
     public login(req: Request, res: Response, next: NextFunction) {
 
         let admin: Admin = req.body.admin;
 
-        let _admin = this.adminModel.findAdmin(admin);
+        let _admin = AdminApi.adminModel.findAdmin(admin);
 
         if (_admin !== null) {
 
@@ -146,11 +146,11 @@ export class AdminApi {
         // 创建
         let admin: Admin = req.body.admin;
 
-        let _admines = this.adminModel.addAdmin(admin);
+        let _admines = AdminApi.adminModel.addAdmin(admin);
 
         if (_admines !== null) {
 
-            let _admin = this.adminModel.findAdmin(admin);
+            let _admin = AdminApi.adminModel.findAdmin(admin);
 
             if (_admin !== null) {
 
@@ -175,11 +175,11 @@ export class AdminApi {
 
         let admin: Admin = req.body.admin;
 
-        let _admin = this.adminModel.findAdmin(admin);
+        let _admin = AdminApi.adminModel.findAdmin(admin);
 
         if (_admin !== null) {
 
-            let _admines = this.adminModel.delAdmin(_admin);
+            let _admines = AdminApi.adminModel.delAdmin(_admin);
 
             if (_admines !== null) {
 
@@ -199,7 +199,7 @@ export class AdminApi {
 
     public list(req: Request, res: Response, next: NextFunction) {
 
-        let _admines = this.adminModel.getAdmines();
+        let _admines = AdminApi.adminModel.getAdmines();
 
         if (_admines) {
 
@@ -220,7 +220,7 @@ export class AdminApi {
 
         let admin = req.body.admin;
 
-        let _admin = this.adminModel.findAdmin(admin);
+        let _admin = AdminApi.adminModel.findAdmin(admin);
 
         if (_admin !== null) {
 
@@ -260,11 +260,11 @@ export class AdminApi {
 
         let admin: Admin = req.body.admin;
 
-        let _admines = this.adminModel.updateAdmin(admin);
+        let _admines = AdminApi.adminModel.updateAdmin(admin);
 
         if (_admines !== null) {
 
-            let _admin = this.adminModel.findAdmin(admin);
+            let _admin = AdminApi.adminModel.findAdmin(admin);
 
             if (_admin !== null) {
 

@@ -59,16 +59,15 @@ export class LessionApi {
 
     }
 
-    private lessionModel: LessionModel;
+    protected static lessionModel = new LessionModel();
 
     constructor() {
 
-        this.lessionModel = new LessionModel();
     }
 
     public list(req: Request, res: Response, next: NextFunction) {
 
-        let _list = this.lessionModel.getList();
+        let _list = LessionApi.lessionModel.getList();
 
         if (_list) {
 
@@ -85,7 +84,7 @@ export class LessionApi {
 
         let lession = req.body.lession;
 
-        let _lession = this.lessionModel.getLession(lession.id);
+        let _lession = LessionApi.lessionModel.getLession(lession.id);
 
         if (_lession !== null) {
 
@@ -103,11 +102,11 @@ export class LessionApi {
 
         let lession = req.body.lession;
 
-        let _lessiones = this.lessionModel.setLession(lession.id, lession);
+        let _lessiones = LessionApi.lessionModel.setLession(lession.id, lession);
 
         if (_lessiones !== null) {
 
-            let _lession = this.lessionModel.getLession(lession.id);
+            let _lession = LessionApi.lessionModel.getLession(lession.id);
 
             if (_lession !== null) {
 
@@ -129,7 +128,7 @@ export class LessionApi {
 
         let lession: Lession = req.body.lession;
 
-        let _lessiones = this.lessionModel.addLession(lession);
+        let _lessiones = LessionApi.lessionModel.addLession(lession);
 
         if (_lessiones) {
 
@@ -146,11 +145,11 @@ export class LessionApi {
 
         let lession: Lession = req.body.lession;
 
-        let _lession = this.lessionModel.getLession(lession.id);
+        let _lession = LessionApi.lessionModel.getLession(lession.id);
 
         if (_lession !== null) {
 
-            let _lessiones = this.lessionModel.delLession(lession.id);
+            let _lessiones = LessionApi.lessionModel.delLession(lession.id);
 
             if (_lessiones !== null) {
 

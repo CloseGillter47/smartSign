@@ -1,6 +1,8 @@
 // 引入 express 组件
 import { NextFunction, Response, Request, Router } from "express";
 
+import { StudentModel } from "../models/student";
+
 // model
 
 /**
@@ -47,7 +49,7 @@ export class StudentApi {
         });
 
     }
-
+    
     constructor() {
 
     }

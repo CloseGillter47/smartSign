@@ -1,7 +1,11 @@
 import * as FS from "fs";
 
-
 const XLSX = require("node-xlsx");
+
+export interface Sheet {
+    name?: string;
+    data?: any[];
+}
 
 export class Excel {
 
@@ -14,7 +18,7 @@ export class Excel {
 
     }
 
-    public read(path: string): Array<any> {
+    public read(path: string): Array<Sheet> {
 
         let res: Array<any>;
 
@@ -32,7 +36,7 @@ export class Excel {
         return res;
     }
 
-    public write(path: string, sheets: Array<any>): boolean {
+    public write(path: string, sheets: Array<Sheet>): boolean {
 
         if (!path || Object.prototype.toString.call(sheets) !== '[object Array]') return false;
 
