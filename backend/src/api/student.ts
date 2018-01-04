@@ -28,7 +28,7 @@ export class StudentApi {
         // 用于学员检索登录
         // 获取学员 接收学员对象{name:string,classId:string}
         router.post("/get/student", (req: Request, res: Response, next: NextFunction) => {
-            new StudentApi().add(req, res, next);
+            new StudentApi().find(req, res, next);
         });
 
         // 用于管理员临时添加学员 (永久添加)
@@ -40,13 +40,13 @@ export class StudentApi {
         // 用于管理员临时删除学员 (永久删除)
         // 删除学员 接收学员对象列表[{id:string,name:string,pinyin:string,...},...]
         router.post("/del/students", (req: Request, res: Response, next: NextFunction) => {
-            new StudentApi().add(req, res, next);
+            new StudentApi().delete(req, res, next);
         });
 
         // 用于学员提交签到信息 (永久更新)
         // 更新学员 接收学员对象{id:string,name:string,pinyin:string,...}
         router.post("/update/student", (req: Request, res: Response, next: NextFunction) => {
-            new StudentApi().add(req, res, next);
+            new StudentApi().update(req, res, next);
         });
 
     }
@@ -118,13 +118,42 @@ export class StudentApi {
     }
 
 
-    public get(req: Request, res: Response, next: NextFunction) {
+    public find(req: Request, res: Response, next: NextFunction) {
+
+        let _lessionId = req.body.lessionid;
+
+        let _studentModel = new StudentModel(_lessionId);
+
+        let _studentes = _studentModel.getList();
+
+        if (_studentes) {
+
+            res.send(new Mes({ students: _studentes }, "添加成功", 200).result());
+
+        } else {
+
+            res.send(new Mes({}, "请求失败，找不到相关数据", 401).result());
+        }
 
     }
 
 
     public list(req: Request, res: Response, next: NextFunction) {
 
+        let _lessionId = req.body.lessionid;
+
+        let _studentModel = new StudentModel(_lessionId);
+
+        let _studentes = _studentModel.getList();
+
+        if (_studentes) {
+
+            res.send(new Mes({ students: _studentes }, "添加成功", 200).result());
+
+        } else {
+
+            res.send(new Mes({}, "请求失败，找不到相关数据", 401).result());
+        }
     }
 
 
