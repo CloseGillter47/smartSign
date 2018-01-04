@@ -122,13 +122,15 @@ export class StudentApi {
 
         let _lessionId = req.body.lessionid;
 
+        let _student = req.body.student;
+
         let _studentModel = new StudentModel(_lessionId);
 
-        let _studentes = _studentModel.getList();
+        let _istudent = _studentModel.getStudent(_student.id);
 
-        if (_studentes) {
+        if (_istudent !== null) {
 
-            res.send(new Mes({ students: _studentes }, "添加成功", 200).result());
+            res.send(new Mes({ students: _istudent }, "请求成功", 200).result());
 
         } else {
 
@@ -158,6 +160,23 @@ export class StudentApi {
 
 
     public update(req: Request, res: Response, next: NextFunction) {
+
+        let _lessionId = req.body.lessionid;
+
+        let _student = req.body.student;
+
+        let _studentModel = new StudentModel(_lessionId);
+
+        let _istudent = _studentModel.setStudent(_student.id, _student);
+
+        if (_istudent !== null) {
+
+            res.send(new Mes({ students: _istudent }, "请求成功", 200).result());
+
+        } else {
+
+            res.send(new Mes({}, "请求失败，找不到相关数据", 401).result());
+        }
 
     }
 
