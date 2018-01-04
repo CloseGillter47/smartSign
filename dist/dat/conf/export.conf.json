@@ -4,6 +4,7 @@
         {
             "name": "system",
             "keyword": "No",
+            "keywordIndex": 3,
             "keys": [
                 "name",
                 "pinyin",

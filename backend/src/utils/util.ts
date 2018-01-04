@@ -21,9 +21,18 @@ export function GetFile(url: string, json?: boolean, strict?: boolean): any {
 
     } else {
 
-        if (strict) { json ? FS.writeFileSync(url, {}, 'utf8') : FS.writeFileSync(url, "", 'utf8') }
+        if (!strict) {
+            // 非严格模式，写入新文件
 
-        return json ? {} : "";
+            json ? FS.writeFileSync(url, JSON.stringify({}), 'utf8') : FS.writeFileSync(url, "", 'utf8');
+
+            return json ? {} : "";
+
+        } else {
+            // 严格模式，不能写入文件
+
+            return json ? null : "";
+        }
     }
 
 }
@@ -87,18 +96,26 @@ export function dateToLocalString(date?: string | Date, type?: string, size?: nu
     let _dateString = _date.toJSON();
 
     // 2017/12/25T09:17:19.211Z
-    _dateString.replace(/\-/g, spacer);
+    _dateString = _dateString.replace(/\-/g, spacer);
 
     // 2017/12/25 09:17:19.211Z
-    _dateString.replace(/[a-zA-Z](?!$)/g, " ");
+    _dateString = _dateString.replace(/[a-zA-Z](?!$)/g, " ");
 
-    // 2017/12/25 09:17:19.211
-    if (type === "date") return _dateString.replace(/[a-zA-Z]/g, "");
+    switch (type) {
+        // 2017/12/25 09:17:19.211
+        case "date":
+            return _dateString.replace(/[a-zA-Z]/g, "");
+        // 20171225091719211
+        case "number":
+            return _dateString.replace(/[a-zA-Z]/g, "").replace(/\W/g, "");
 
-    // 20171225091719211
-    if (type === "number") return _dateString.replace(/\W/g, "");
+        // 20171225091719
+        case "numbercut":
+            return _dateString.replace(/[a-zA-Z]/g, "").replace(/\W/g, "").substr(0, size);
 
-    // 20171225091719
-    if (type === "numberut") return _dateString.substr(0, size);
+        // 2017-12-25T09:17:19.211Z
+        default:
 
+            return _date.toJSON();
+    }
 }

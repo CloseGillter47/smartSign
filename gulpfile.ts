@@ -59,12 +59,12 @@ gulp.task("test:express", () => {
  * 创建工程.
  */
 gulp.task("default", (done) => {
-    runSequence("clean", "copy", "build:express", "test:express");
+    runSequence("clean", "copy", "dev:express", "test:express");
 });
 
 /**
  * 发布产品
  */
 gulp.task("product", (done) => {
-    runSequence("clean", "copy", "dev:express");
+    runSequence("clean", "copy", "build:express");
 });
