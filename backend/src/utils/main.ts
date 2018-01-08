@@ -39,6 +39,7 @@ export class KurokoCore {
 
     constructor() {
         if (!FS.existsSync(Tool.getPath('admin'))) FS.mkdirSync(Tool.getPath('admin'));
+        if (!FS.existsSync(Tool.getPath('.out'))) FS.mkdirSync(Tool.getPath('.out'));
         if (!FS.existsSync(Tool.getPath('files'))) FS.mkdirSync(Tool.getPath('files'));
         if (!FS.existsSync(Tool.getPath('lession'))) FS.mkdirSync(Tool.getPath('lession'));
         if (!FS.existsSync(Tool.getPath('student'))) FS.mkdirSync(Tool.getPath('student'));
@@ -136,6 +137,8 @@ export class KurokoCore {
     public initSystem() {
 
         this.clearTemp(Tool.getPath('student'));
+
+        this.clearTemp(Tool.getPath('.out'));
 
         Tool.SetFile(PATH.join(Tool.getPath('files'), 'index.json'), [], true, false);
 
