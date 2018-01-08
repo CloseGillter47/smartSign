@@ -17,7 +17,7 @@ export function GetFile(url: string, json?: boolean, strict?: boolean): any {
 
         let _res = FS.readFileSync(url, 'utf8');
 
-        return json ? JSON.parse(_res) : _res;
+        return _res && json ? JSON.parse(_res) : _res;
 
     } else {
 
@@ -85,7 +85,7 @@ export function dateToLocalString(date?: string | Date, type?: string, size?: nu
 
     size = size || 14;
 
-    let _date = date ? new Date(date.toString()) : new Date();
+    let _date = typeof date === 'string' ? new Date(date) : date || new Date();
 
     let _time = _date.getTime();
 

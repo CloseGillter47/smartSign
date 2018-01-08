@@ -22,6 +22,8 @@ chai.should();
 
     @test public coreTest() {
 
-        new KurokoCore().init();
+        // new KurokoCore().initSystem();
+        // new KurokoCore().init();
+        new KurokoCore().exportAllLession();
     }
 }

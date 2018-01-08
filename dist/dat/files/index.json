@@ -1,15 +1,1 @@
-[
-    {
-        "fileId": "20180103125606",
-        "upload": "2018/01/03 12:56:06",
-        "author": "root",
-        "filename": "test.xlsx",
-        "uploadUrl": "user/kuroko/smartsign/dist/dat/temps/20180103125606.xlsx",
-        "downloadUrl": "user/kuroko/smartsign/dist/dat/exports/20180103125606.xlsx",
-        "lessiones": [
-            "20180103101",
-            "20180103102",
-            "20180103103"
-        ]
-    }
-]
+[{"fileId":"","upload":"","author":"system","filename":"测试.xlsx","fileurl":"/Users/chuxin/Documents/study/Kuroko/smartSign/dist/dat/.in/测试.xlsx","lessiones":["201801081433100","201801081433101"]}]
