@@ -88,7 +88,7 @@
     "mocha": "^3.4.2",
     "mocha-typescript": "^1.1.12",
     "nightwatch": "^0.9.12",
-    "node-sass": "^4.5.3",
+    "node-sass": "^4.7.2",
     "opn": "^5.1.0",
     "optimize-css-assets-webpack-plugin": "^2.0.0",
     "ora": "^1.2.0",

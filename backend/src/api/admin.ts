@@ -6,6 +6,8 @@ import { Admin } from "../interfaces/admin";
 import { Message } from "../interfaces/message";
 import { MessageModel as Mes } from "../models/message";
 
+import * as Tool from "../utils/util";
+
 // model
 
 /**
@@ -109,7 +111,7 @@ export class AdminApi {
 
     public login(req: Request, res: Response, next: NextFunction) {
 
-        let admin: Admin = req.body.admin;
+        let admin: Admin = req.body.user;
 
         let _admin = AdminApi.adminModel.findAdmin(admin);
 
@@ -123,7 +125,7 @@ export class AdminApi {
 
                 delete iadmin.password;
 
-                res.send(new Mes({ admin: iadmin, tooken: new Date() }, "登录成功", 200).result());
+                res.send(new Mes({ admin: iadmin, tooken: Tool.dateToLocalString(new Date(), 'number') }, "登录成功", 200).result());
 
             } else {
 
