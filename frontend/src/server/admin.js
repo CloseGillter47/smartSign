@@ -26,12 +26,12 @@ export function getFile(params) {
 
 // 获取课堂列表
 export function getLessonList(params) {
-    return server.fetchPost('/api/admin/get/lessones', params);
+    return server.fetchPost('/api/class/list', params);
 }
 
 // 获取课堂信息
 export function getLesson(params) {
-    return server.fetchPost('/api/admin/get/lesson', params);
+    return server.fetchPost('/api/class/find', params);
 }
 
 export function setLesson(params) {
@@ -40,7 +40,7 @@ export function setLesson(params) {
 
 // 获取学员列表
 export function getStudentList(params) {
-    return server.fetchPost('/api/admin/get/students', params);
+    return server.fetchPost('/api/get/students', params);
 }
 
 // 获取学员信息

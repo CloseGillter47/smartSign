@@ -82,9 +82,9 @@ export class LessionApi {
 
     public find(req: Request, res: Response, next: NextFunction) {
 
-        let lession = req.body.lession;
+        let lessionId = req.body.lessionId;
 
-        let _lession = LessionApi.lessionModel.getLession(lession.id);
+        let _lession = LessionApi.lessionModel.getLession(lessionId);
 
         if (_lession !== null) {
 

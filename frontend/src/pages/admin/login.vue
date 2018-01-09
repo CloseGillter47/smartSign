@@ -97,7 +97,7 @@ export default {
 
                             reolve({ text: '登陆成功' });
 
-                            sessionStorage.setItem('accessToken', JSON.stringify(res.data.user));
+                            sessionStorage.setItem('accessToken', JSON.stringify(res.data.admin));
 
                             this.$router.replace('/admin/home');
 

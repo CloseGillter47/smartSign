@@ -21,7 +21,7 @@ export class StudentApi {
 
         // 用于管理员查看学员的签到状态
         // 获取学员们 接收班级{id:string,name:string,...}
-        router.get("/get/students", (req: Request, res: Response, next: NextFunction) => {
+        router.post("/get/students", (req: Request, res: Response, next: NextFunction) => {
             new StudentApi().list(req, res, next);
         });
 
@@ -142,7 +142,7 @@ export class StudentApi {
 
     public list(req: Request, res: Response, next: NextFunction) {
 
-        let _lessionId = req.body.lessionid;
+        let _lessionId = req.body.lessionId;
 
         let _studentModel = new StudentModel(_lessionId);
 

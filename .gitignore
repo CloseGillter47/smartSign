@@ -3,6 +3,7 @@
 .vscode/
 dist/backend
 dist/frontend
+dist/dat
 node_modules
 *.zip
 package-lock.json

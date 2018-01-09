@@ -96,7 +96,7 @@
     <div class="containter flex-box flex-col">
         <mu-appbar class="main-box-head" title="详情" titleClass="center-text">
             <mu-icon-button icon="arrow_back" slot="left" @click="goBack" />
-            <mu-icon-button icon="sync" slot="right" @click="getDetail(true)" />
+            <mu-icon-button icon="sync" slot="right" @click="getDetail(true)&&getStudentes(true)" />
         </mu-appbar>
         <div class="main-box-body wbody-box flex-box flex-col">
             <mu-paper class="work-list-item-box" :zDepth="1">
@@ -184,6 +184,7 @@ export default {
       this.lessionId = this.$route.params.id;
 
       this.getDetail(false);
+      this.getStudentes(false);
     } else {
       this.goBack();
     }
@@ -207,7 +208,39 @@ export default {
           .then(
             res => {
               if (res.success) {
-                this.lession = res.data;
+                this.lession = res.data.lession;
+
+                reolve({ text: "获取数据成功" });
+              } else {
+                reject({ text: "获取数据失败" });
+              }
+            },
+            err => {
+              reject({ text: "服务器错误" });
+            }
+          )
+          .catch(err => {
+            reject({ text: "程序错误" });
+          });
+      });
+
+      if (type) this.$toast({ mode: "load", text: "加载中..." }, promise);
+    },
+
+    getStudentes(type) {
+      let promise = new Promise((reolve, reject) => {
+        let user = JSON.parse(sessionStorage.getItem("accessToken"));
+
+        let params = {
+          user: user,
+          lessionId: this.lessionId
+        };
+
+        AdminServer.getStudentList(params)
+          .then(
+            res => {
+              if (res.success) {
+                this.$set(this.lession, "students", res.data.students);
 
                 reolve({ text: "获取数据成功" });
               } else {

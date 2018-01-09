@@ -134,7 +134,7 @@ export default {
           .then(
             res => {
               if (res.success) {
-                this.lessiones = res.data;
+                this.lessiones = res.data.list;
 
                 reolve({ text: "获取数据成功" });
               } else {

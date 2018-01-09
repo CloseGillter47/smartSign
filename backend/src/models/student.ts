@@ -18,8 +18,6 @@ export class StudentModel {
 
         this.LessionId = lessionId;
 
-        return this.getList();
-
     }
 
     public getList() {

@@ -58,7 +58,7 @@ export class FilesApi {
 
         if (filelist) {
 
-            res.send(new Mes({}, "请求数据成功", 200).result());
+            res.send(new Mes({ lessiones: filelist }, "请求数据成功", 200).result());
 
         } else {
 
@@ -102,7 +102,7 @@ export class FilesApi {
 
             let lessionIds = ifile.lessiones;
 
-            
+
 
 
         } else {
