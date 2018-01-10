@@ -29,19 +29,19 @@ export class StudentModel {
 
     public setList(list: Student[]) {
 
-        return Util.SetFile(PATH.join(this.BASE_ROOT, 'index.json'), list, true, false) || this.getList();
+        return Util.SetFile(PATH.join(this.BASE_ROOT, this.LessionId + '.json'), list, true, false) || this.getList();
     }
 
     public addStudent(student: Student) {
 
-        let newId = Util.dateToLocalString(new Date(), "numbercut", 14);
+        let newId = Util.dateToLocalString(new Date(), "numbercut", 13);
 
         for (let _s of this.studentes) {
 
             if (_s.idCard === student.idCard) { return null }
         }
 
-        newId !== this.studentes[this.studentes.length].id ? newId : ~~(this.studentes[this.studentes.length].id) + 1;
+        newId !== this.studentes[this.studentes.length - 1].id ? newId : ~~(this.studentes[this.studentes.length].id) + 1;
 
         Object.assign(student, { id: newId });
 

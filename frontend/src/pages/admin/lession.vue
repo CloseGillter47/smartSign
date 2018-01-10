@@ -150,11 +150,11 @@
                                         <mu-checkbox name="student" :nativeValue="String(s.No)" v-model="list"/>
                                     </div>
                                 </td>
-                                <td>{{s.No}}</td>
+                                <td>{{s.id}}</td>
                                 <td>{{s.name}}</td>
                                 <td>{{s.submited||'否'}}</td>
                                 <td>{{s.checked||'否'}}</td>
-                                <td>{{s.connect}}</td>
+                                <td>{{s.phone}}</td>
                                 <td>{{s.company}}</td>
                             </tr>
 
@@ -213,6 +213,38 @@ export default {
                 reolve({ text: "获取数据成功" });
               } else {
                 reject({ text: "获取数据失败" });
+              }
+            },
+            err => {
+              reject({ text: "服务器错误" });
+            }
+          )
+          .catch(err => {
+            reject({ text: "程序错误" });
+          });
+      });
+
+      if (type) this.$toast({ mode: "load", text: "加载中..." }, promise);
+    },
+
+    addStudent(type, user) {
+      let promise = new Promise((reolve, reject) => {
+        let admin = JSON.parse(sessionStorage.getItem("accessToken"));
+
+        let params = {
+          admin: admin,
+          student: user,
+          lessionId: this.lessionId
+        };
+
+        AdminServer.AddStudents(params)
+          .then(
+            res => {
+              if (res.success) {
+                this.$set(this.lession, "students", res.data.students);
+                reolve({ text: "添加成功" });
+              } else {
+                reject({ text: "添加失败" });
               }
             },
             err => {
@@ -316,7 +348,9 @@ export default {
         currentView: resolve => require(["../com/addStudent.vue"], resolve)
       })
         .then(data => {
-          console.log(data);
+          if (data.name && data.no) {
+            this.addStudent(true, { name: data.name, idCard: data.no });
+          }
         })
         .catch(err => {
           console.log(err);

@@ -50,17 +50,17 @@ export function getStudent(params) {
 
 // 更新学员信息
 export function setStudent(params) {
-    return server.fetchPost('/api/admin/set/student', params);
+    return server.fetchPost('/api/set/student', params);
 }
 
 // 添加至少一个学员
 export function AddStudents(params) {
-    return server.fetchPost('/api/admin/add/students', params);
+    return server.fetchPost('/api/add/student', params);
 }
 
 // 删除至少一个学员
 export function delStudents(params) {
-    return server.fetchPost('/api/admin/del/students', params);
+    return server.fetchPost('/api/del/student', params);
 }
 
 // 上传表格文件

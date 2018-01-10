@@ -15,7 +15,8 @@
                 "address",
                 "phone",
                 "email",
-                "emailCode"
+                "emailCode",
+                "company"
             ],
             "values": [
                 "姓名",
@@ -27,7 +28,8 @@
                 "地址",
                 "电话",
                 "邮件",
-                "邮编"
+                "邮编",
+                "公司"
             ]
         }
     ]

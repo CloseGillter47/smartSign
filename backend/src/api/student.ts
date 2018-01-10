@@ -33,19 +33,19 @@ export class StudentApi {
 
         // 用于管理员临时添加学员 (永久添加)
         // 新增学员 接收学员对象{name:string,pinyin:string}
-        router.post("/add/students", (req: Request, res: Response, next: NextFunction) => {
+        router.post("/add/student", (req: Request, res: Response, next: NextFunction) => {
             new StudentApi().add(req, res, next);
         });
 
         // 用于管理员临时删除学员 (永久删除)
         // 删除学员 接收学员对象列表[{id:string,name:string,pinyin:string,...},...]
-        router.post("/del/students", (req: Request, res: Response, next: NextFunction) => {
+        router.post("/del/student", (req: Request, res: Response, next: NextFunction) => {
             new StudentApi().delete(req, res, next);
         });
 
         // 用于学员提交签到信息 (永久更新)
         // 更新学员 接收学员对象{id:string,name:string,pinyin:string,...}
-        router.post("/update/student", (req: Request, res: Response, next: NextFunction) => {
+        router.post("/set/student", (req: Request, res: Response, next: NextFunction) => {
             new StudentApi().update(req, res, next);
         });
 
@@ -59,7 +59,7 @@ export class StudentApi {
 
         let _student = req.body.student;
 
-        let _lessionId = req.body.lessionid;
+        let _lessionId = req.body.lessionId;
 
         let _studentModel = new StudentModel(_lessionId);
 

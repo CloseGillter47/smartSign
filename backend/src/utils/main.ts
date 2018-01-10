@@ -269,7 +269,7 @@ export class KurokoCore {
 
                     rowConf.keys.forEach((k, i) => {
 
-                        student[k] = row[i] + '' || '';
+                        student[k] = row[i] ? row[i] + '' : '';
                     });
 
                     student['id'] = idHeader + idIndex++;
