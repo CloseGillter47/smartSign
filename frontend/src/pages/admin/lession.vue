@@ -147,7 +147,7 @@
                             <tr v-for="(s,i) in lession.students" :key="i">
                                 <td class="table-check">
                                     <div>
-                                        <mu-checkbox name="student" :nativeValue="String(s.No)" v-model="list"/>
+                                        <mu-checkbox name="student" @change="toggleSelectItem()" :nativeValue="String(s.id)" v-model="list"/>
                                     </div>
                                 </td>
                                 <td>{{s.id}}</td>
@@ -358,6 +358,7 @@ export default {
     },
 
     del() {
+      let vm = this;
       if (this.list.length) {
         this.$dialog({
           title: "删除学员",
@@ -369,7 +370,7 @@ export default {
         })
           .then(
             data => {
-              console.log(this.list);
+              console.log(vm.list);
             },
             () => {
               console.log("用户取消操作");
@@ -441,14 +442,21 @@ export default {
 
     toggleSelectAll() {
       let vm = this;
-      if (this.selectAll) {
+      if (!this.selectAll) {
         vm.list = [];
         this.lession.students.forEach((v, i) => {
-          vm.list.push(v.No);
+          vm.list.push(v.id);
         });
       } else {
         this.list = [];
       }
+    },
+
+    toggleSelectItem() {
+      let vm = this;
+      vm.$nextTick(() => {
+        vm.selectAll = vm.list.length === vm.lession.students.length;
+      });
     }
   }
 };

@@ -2,6 +2,7 @@
 import { NextFunction, Response, Request, Router } from "express";
 
 import { StudentModel } from "../models/student";
+import { LessionModel } from "../models/lession";
 import { MessageModel as Mes } from "../models/message";
 
 // model
@@ -70,6 +71,14 @@ export class StudentApi {
             let _istudentes = _studentModel.addStudent(_student);
 
             if (_istudentes) {
+
+                let lessionModel = new LessionModel();
+
+                let lession = lessionModel.getLession(_lessionId);
+
+                if (lession && lession.total) lession.size = (lession.total)++;
+
+                lessionModel.setLession(_lessionId, lession);
 
                 res.send(new Mes({ students: _istudentes }, "添加成功", 200).result());
 
