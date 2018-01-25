@@ -24,6 +24,17 @@ Vue.config.productionTip = false
 Vue.use(Dialog)
 Vue.use(Toast)
 
+function isWeiXin() {
+  var ua = window.navigator.userAgent.toLowerCase();
+  if (ua.match(/MicroMessenger/i) == 'micromessenger') {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+Vue.prototype.$isWeiXin = isWeiXin();
+
 
 router.beforeEach((to, from, next) => {
 

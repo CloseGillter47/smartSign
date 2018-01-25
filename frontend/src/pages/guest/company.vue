@@ -1,29 +1,28 @@
 <style lang="scss" >
-@import '../../assets/css/function';
+@import "../../assets/css/function";
 </style>
 <style lang="scss" scoped>
-@import '../../assets/css/function';
+@import "../../assets/css/function";
 .form-class {
-    padding: px2rem(42px);
-    padding-right: px2rem(66px);
-    h2 {
-
-        padding: px2rem(36px) 0 px2rem(36px) px2rem(12px);
-        width: 100%;
-        font-weight: 700;
-    }
+  padding: px2rem(42px);
+  padding-right: px2rem(66px);
+  h2 {
+    padding: px2rem(36px) 0 px2rem(36px) px2rem(12px);
+    width: 100%;
+    font-weight: 700;
+  }
 }
 
 .btn-group {
-    width: 100%;
-    padding: px2rem(72px);
-    padding-left: px2rem(24px);
-    padding-right: 0;
+  width: 100%;
+  padding: px2rem(72px);
+  padding-left: px2rem(24px);
+  padding-right: 0;
 }
 
 .next-btn {
-    font-size: 16px;
-    height: px2rem(96px);
+  font-size: 16px;
+  height: px2rem(96px);
 }
 </style>
 <template>
@@ -62,93 +61,101 @@
     </div>
 </template>
 <script>
-
-
 export default {
-    data() {
-        return {
-            classId: '',
-            user: new Object(),
-            company: '1'
-        }
-    },
+  data() {
+    return {
+      classId: "",
+      user: new Object(),
+      company: "1"
+    };
+  },
 
-    components: {
+  components: {},
 
-    },
-
-    mounted() {
-
-        if (this.$route.params.id) {
-
-            this.classId = this.$route.params.id;
-
-        } else {
-
-            this.$router.push({ name: 'NotFount' });
-        }
-
-        this.user = this.$store.state.user.user;
-
-    },
-
-    methods: {
-
-        goBack() {
-            this.$router.go(-1);
-        },
-
-        next() {
-
-            if (this.company) {
-
-                switch (this.company) {
-                    case '1':
-                        this.user.company = '国有';
-                        break;
-                    case '2':
-                        this.user.company = '股份制';
-                        break;
-                    case '3':
-                        this.user.company = '三资企业';
-                        break;
-                    case '4':
-                        this.user.company = '私营';
-                        break;
-                    case '5':
-                        this.user.company = '其他';
-                        break;
-                }
-
-                this.$store.commit('SET_USER_INFO', this.user);
-
-                this.$router.push(`/guest/${this.classId}/roboto`);
-
-            } else {
-
-                this.$dialog({
-                    title: '信息不完整',
-                    YBtnText: '确定',
-                    showYBtn: true,
-                    showNBtn: false,
-                    context: '请填写完整信息！'
-                })
-                    .then(
-                    data => {
-                        console.log('用户取消操作');
-                    },
-                    () => {
-                        console.log('用户取消操作');
-                    })
-                    .catch(err => {
-                        console.log(err);
-                    });
-
-            }
-        },
-        handleRadio(val) {
-            this.company = val;
-        }
+  mounted() {
+    if (this.$route.params.id) {
+      this.classId = this.$route.params.id;
+    } else {
+      this.$router.push({ name: "NotFount" });
     }
-}
+
+    this.user = this.$store.state.user.user;
+
+    switch (this.user.company) {
+      case "国有":
+        this.company = "1";
+        break;
+      case "股份制":
+        this.company = "2";
+        break;
+      case "三资企业":
+        this.company = "3";
+        break;
+      case "私营":
+        this.company = "4";
+        break;
+      case "其他":
+        this.company = "5";
+        break;
+
+      default:
+        this.company = "1";
+        break;
+    }
+  },
+
+  methods: {
+    goBack() {
+      this.$router.go(-1);
+    },
+
+    next() {
+      if (this.company) {
+        switch (this.company) {
+          case "1":
+            this.user.company = "国有";
+            break;
+          case "2":
+            this.user.company = "股份制";
+            break;
+          case "3":
+            this.user.company = "三资企业";
+            break;
+          case "4":
+            this.user.company = "私营";
+            break;
+          case "5":
+            this.user.company = "其他";
+            break;
+        }
+
+        this.$store.commit("SET_USER_INFO", this.user);
+
+        this.$router.push(`/guest/${this.classId}/roboto`);
+      } else {
+        this.$dialog({
+          title: "信息不完整",
+          YBtnText: "确定",
+          showYBtn: true,
+          showNBtn: false,
+          context: "请填写完整信息！"
+        })
+          .then(
+            data => {
+              console.log("用户取消操作");
+            },
+            () => {
+              console.log("用户取消操作");
+            }
+          )
+          .catch(err => {
+            console.log(err);
+          });
+      }
+    },
+    handleRadio(val) {
+      this.company = val;
+    }
+  }
+};
 </script>

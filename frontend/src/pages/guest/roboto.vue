@@ -149,6 +149,8 @@ export default {
     }
 
     this.user = this.$store.state.user.user;
+    this.typeA = this.$store.state.user.user.typeA || [];
+    this.typeB = this.$store.state.user.user.typeB || [];
   },
 
   methods: {
@@ -160,7 +162,7 @@ export default {
         title: "提交确认",
         YBtnText: "确定",
         showYBtn: true,
-        showNBtn: false,
+        showNBtn: true,
         context: "确认提交信息吗？"
       })
         .then(
@@ -189,11 +191,17 @@ export default {
         .then(data => {
           if (data) {
             if (data.type === "1") {
+              if (!vm.typeA.length) {
+                vm.typeA = [];
+              }
               vm.typeA.push(data);
               return;
             }
 
             if (data.type === "2") {
+              if (!vm.typeB.length) {
+                vm.typeB = [];
+              }
               vm.typeB.push(data);
               return;
             }
@@ -214,12 +222,17 @@ export default {
       }
     },
     submit(type) {
+      let vm = this;
       let promise = new Promise((reolve, reject) => {
+        vm.$set(vm.user, "typeA", vm.typeA);
+        vm.$set(vm.user, "typeB", vm.typeB);
+        let _user = { checked: 1, submited: 1 };
+        Object.assign(_user, vm.user);
+
         let params = {
           lessionId: this.classId,
-          user: this.user
+          user: _user
         };
-
         GuestServer.submitStudent(params)
           .then(
             res => {

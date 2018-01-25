@@ -18,6 +18,8 @@ export class StudentModel {
 
         this.LessionId = lessionId;
 
+        this.getList();
+
     }
 
     public getList() {
@@ -66,11 +68,11 @@ export class StudentModel {
         return null;
     }
 
-    public getStudent(studentId: string) {
+    public getStudent(idCard: string) {
 
         for (let _student of this.studentes) {
 
-            if (_student.id === studentId) {
+            if (_student.idCard === idCard) {
 
                 return _student;
             }
@@ -81,11 +83,11 @@ export class StudentModel {
 
     public setStudent(studentId: string, student: Student) {
 
-        for (let _student of this.studentes) {
+        for (let idx in this.studentes) {
 
-            if (_student.id === studentId) {
+            if (this.studentes[idx].id === studentId) {
 
-                _student = student;
+                this.studentes[idx] = student;
 
                 return this.setList(this.studentes);
             }

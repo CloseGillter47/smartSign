@@ -137,6 +137,7 @@
                             </th>
                             <th>学员编号</th>
                             <th>学员姓名</th>
+                            <th>身份证</th>
                             <th>是否提交</th>
                             <th>是否签到</th>
                             <th>联系方式</th>
@@ -152,8 +153,9 @@
                                 </td>
                                 <td>{{s.id}}</td>
                                 <td>{{s.name}}</td>
-                                <td>{{s.submited||'否'}}</td>
-                                <td>{{s.checked||'否'}}</td>
+                                <td>{{s.idCard}}</td>
+                                <td>{{s.submited?'是':'否'}}</td>
+                                <td>{{s.checked?'是':'否'}}</td>
                                 <td>{{s.phone}}</td>
                                 <td>{{s.company}}</td>
                             </tr>

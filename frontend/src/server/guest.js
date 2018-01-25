@@ -5,9 +5,9 @@ export function test(params) {
 }
 
 export function checkStudent(params) {
-    return server.fetchPost('/api/guest/get/student', params);
+    return server.fetchPost('/api/get/student', params);
 }
 
 export function submitStudent(params) {
-    return server.fetchPost('/api/guest/set/student', params);
+    return server.fetchPost('/api/set/student', params);
 }

@@ -129,13 +129,13 @@ export class StudentApi {
 
     public find(req: Request, res: Response, next: NextFunction) {
 
-        let _lessionId = req.body.lessionid;
+        let _lessionId = req.body.lessionId;
 
-        let _student = req.body.student;
+        let _student = req.body.user;
 
         let _studentModel = new StudentModel(_lessionId);
 
-        let _istudent = _studentModel.getStudent(_student.id);
+        let _istudent = _studentModel.getStudent(_student.personNoCode);
 
         if (_istudent !== null) {
 
@@ -159,7 +159,7 @@ export class StudentApi {
 
         if (_studentes) {
 
-            res.send(new Mes({ students: _studentes }, "添加成功", 200).result());
+            res.send(new Mes({ students: _studentes }, "请求成功", 200).result());
 
         } else {
 
@@ -170,9 +170,16 @@ export class StudentApi {
 
     public update(req: Request, res: Response, next: NextFunction) {
 
-        let _lessionId = req.body.lessionid;
+        let _lessionId = req.body.lessionId;
 
-        let _student = req.body.student;
+        let _student = req.body.user;
+
+        if (_student.typeA) {
+            delete _student.typeA
+        }
+        if (_student.typeB) {
+            delete _student.typeB
+        }
 
         let _studentModel = new StudentModel(_lessionId);
 

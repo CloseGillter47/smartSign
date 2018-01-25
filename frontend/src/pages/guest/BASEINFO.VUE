@@ -35,11 +35,11 @@
         <div class="main-box-body flex-box flex-col flex-betwn form-class">
             <h2>基本信息</h2>
             <mu-divider class="w-divider" />
-            <mu-text-field hintText="姓名" type="text" v-model="user.personName" fullWidth icon="portrait" disabled />
+            <mu-text-field hintText="姓名" type="text" v-model="user.name" fullWidth icon="portrait" disabled />
 
             <mu-text-field hintText="拼音" type="text" v-model="user.pinyin" fullWidth icon="text_format" />
 
-            <mu-text-field hintText="身份证号码" type="text" v-model="user.personNoCode" fullWidth icon="lock_outline" disabled />
+            <mu-text-field hintText="身份证号码" type="text" v-model="user.idCard" fullWidth icon="lock_outline" disabled />
             <h2>职务相关</h2>
             <mu-divider class="w-divider" />
             <mu-text-field hintText="单位" type="text" v-model="user.unit" fullWidth icon="business" />
@@ -49,13 +49,13 @@
             <mu-text-field hintText="职务" type="text" v-model="user.job" fullWidth icon="work" />
             <h2>联系方式</h2>
             <mu-divider class="w-divider" />
-            <mu-text-field hintText="通信地址" type="text" v-model="user.addr" fullWidth icon="store" />
+            <mu-text-field hintText="通信地址" type="text" v-model="user.address" fullWidth icon="store" />
 
             <mu-text-field hintText="联系电话" type="text" v-model="user.phone" fullWidth icon="call" />
 
             <mu-text-field hintText="E-mail" type="text" v-model="user.email" fullWidth icon="email" />
 
-            <mu-text-field hintText="邮编" type="text" v-model="user.code" fullWidth icon="hdr_strong" />
+            <mu-text-field hintText="邮编" type="text" v-model="user.emailCode" fullWidth icon="hdr_strong" />
             <div class="btn-group">
                 <mu-raised-button label="下一步" class="next-btn" primary fullWidth backgroundColor="#4caf50" @click="next" />
             </div>

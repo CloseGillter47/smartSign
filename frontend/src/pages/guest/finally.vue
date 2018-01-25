@@ -1,27 +1,27 @@
 <style lang="scss" >
-@import '../../assets/css/function';
+@import "../../assets/css/function";
 </style>
 <style lang="scss" scoped>
-@import '../../assets/css/function';
+@import "../../assets/css/function";
 .logo-box {
-    padding-top: px2rem(96px);
+  padding-top: px2rem(96px);
 }
 
 .btn-boxs {
-    width: 100%;
-    padding: px2rem(42px) px2rem(42px) px2rem(256px) px2rem(42px);
+  width: 100%;
+  padding: px2rem(42px) px2rem(42px) px2rem(256px) px2rem(42px);
 }
 
 .title {
-    margin: 0;
-    font-size: 16px;
-    margin-top: px2rem(36px);
+  margin: 0;
+  font-size: 16px;
+  margin-top: px2rem(36px);
 }
 
 .wc-s-btn {
-    font-size: 16px;
-    height: px2rem(96px);
-    margin-top: px2rem(16px);
+  font-size: 16px;
+  height: px2rem(96px);
+  margin-top: px2rem(16px);
 }
 </style>
 <template>
@@ -46,40 +46,33 @@
     </div>
 </template>
 <script>
-
 export default {
-    data() {
-        return {
-            classId: ''
-        }
-    },
+  data() {
+    return {
+      classId: ""
+    };
+  },
 
-    mounted() {
-        if (this.$route.params.id) {
-
-            this.classId = this.$route.params.id;
-
-        } else {
-
-            this.$router.push({ name: 'NotFount' });
-        }
-
-    },
-
-    methods: {
-        start() {
-            this.$store.commit('SET_USER_INFO', new Object());
-
-            this.$router.replace(`/guest/${this.classId}/index`);
-        },
-        finash() {
-
-            // 退出微信内置浏览器
-            if (WeixinJSBridge) {
-                WeixinJSBridge.call('closeWindow');
-            }
-        }
-
+  mounted() {
+    if (this.$route.params.id) {
+      this.classId = this.$route.params.id;
+    } else {
+      this.$router.push({ name: "NotFount" });
     }
-}
+  },
+
+  methods: {
+    start() {
+      this.$store.commit("SET_USER_INFO", new Object());
+
+      this.$router.replace(`/guest/${this.classId}/index`);
+    },
+    finash() {
+      // 退出微信内置浏览器
+      if (this.$isWeiXin) {
+        WeixinJSBridge.call("closeWindow");
+      }
+    }
+  }
+};
 </script>

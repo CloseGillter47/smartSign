@@ -1,46 +1,52 @@
 <style>
 .main-box-body {
-    width: 100%;
-    height: 0;
-    flex-grow: 2;
-    overflow-y: auto;
-    overflow-x: hidden;
+  width: 100%;
+  height: 0;
+  flex-grow: 2;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 </style>
 
 <style lang="scss" >
-@import '../../assets/css/function';
+@import "../../assets/css/function";
 </style>
 <style lang="scss" scoped>
-@import '../../assets/css/function';
+@import "../../assets/css/function";
 .main-box-head {
-    width: 100%;
+  width: 100%;
 }
 
 .main-box-foot {
-    width: 100%;
+  width: 100%;
 }
 
 .user-info {
-    height: 128px;
+  height: 128px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: -webkit-gradient(
+    linear,
+    left top,
+    right bottom,
+    from(#678df9),
+    to(#8241b7)
+  );
+  div {
+    padding-left: 24px;
     width: 100%;
     display: flex;
     align-items: center;
-    justify-content: center;
-    background: -webkit-gradient(linear, left top, right bottom, from(#678DF9), to(#8241B7));
-    div {
-        padding-left: 24px;
-        width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-        flex-direction: row;
-        h2 {
-            color: #FFF;
-            margin-left: 24px;
-            font-size: 1.6em;
-        }
+    justify-content: flex-start;
+    flex-direction: row;
+    h2 {
+      color: #fff;
+      margin-left: 24px;
+      font-size: 1.6em;
     }
+  }
 }
 </style>
 <template>
@@ -99,170 +105,160 @@
     </div>
 </template>
 <script>
-import * as AdminServer from '../../server/admin'
-import * as Util from "../../util"
+import * as AdminServer from "../../server/admin";
+import * as Util from "../../util";
 
-import Event from '../../main'
+import Event from "../../main";
 
-import home from './home'
-import work from './work'
-import file from './files'
-import setting from './setting'
+import home from "./home";
+import work from "./work";
+import file from "./files";
+import setting from "./setting";
 
 export default {
-    data() {
-        return {
-            username: '',
-            password: '',
+  data() {
+    return {
+      username: "",
+      password: "",
 
-            mainTitle: '管理面板',
-            bottomNav: 'home',
-            open: false,
-            docked: true,
-            currentView: home
-        }
+      mainTitle: "管理面板",
+      bottomNav: "home",
+      open: false,
+      docked: true,
+      currentView: home
+    };
+  },
+
+  beforeRouteEnter(to, from, next) {
+    next(vm => {
+      let current = vm.$store.state.com.current;
+
+      vm.handleChange(current);
+    });
+  },
+
+  components: {
+    home,
+    work,
+    file,
+    setting
+  },
+
+  methods: {
+    goBack() {
+      this.$router.go(-1);
     },
 
-    beforeRouteEnter(to, from, next) {
+    login() {
+      this.$router.push("/");
+    },
+    // 导航事件
+    handleChange(val) {
+      this.bottomNav = val;
 
-        next(vm => {
+      this.$store.commit("SET_MIAN_PAGE", val);
 
-            let current = vm.$store.state.com.current;
+      switch (val) {
+        case "home":
+          this.currentView = home;
+          this.mainTitle = "管理面板";
+          break;
+        case "work":
+          this.currentView = work;
+          this.mainTitle = "进行中";
+          break;
+        case "file":
+          this.currentView = file;
+          this.mainTitle = "文件管理";
+          break;
+        case "setting":
+          this.currentView = setting;
+          this.mainTitle = "系统设置";
+          break;
+        default:
+          this.currentView = home;
+          this.mainTitle = "管理面板";
+          break;
+      }
+    },
+    // 抽屉显示隐藏
+    toggle(flag) {
+      this.open = !this.open;
+      this.docked = !flag;
+    },
+    //////////////////////////////////////////////////////////////////////////////////////////
+    // 菜单事件
+    // 1.分享二维码
+    shareQrcode() {
+      this.$router.push({ name: "share", params: { page: "role" } });
+    },
+    // 2.问题反馈
+    facebackToMe() {
+      this.$router.push("/connect");
+    },
+    // 3.使用说明
+    howToUseIt() {
+      this.$router.push("/note");
+    },
+    // 4.退出登陆
+    loginOut() {
+      sessionStorage.removeItem("accessToken");
 
-            vm.handleChange(current);
+      this.$router.replace("/admin/login");
+    },
+    // 4.退出程序
+    exitApp() {
+      // 退出微信内置浏览器
+      if (this.$isWeiXin) {
+        WeixinJSBridge.call("closeWindow");
+      }
+    },
+    //
+    //////////////////////////////////////////////////////////////////////////////////////////
 
-        });
+    refresh() {
+      switch (this.bottomNav) {
+        case "home":
+          Event.$emit("refreshData", { page: "home" });
+          break;
+
+        case "work":
+          Event.$emit("refreshData", { page: "work" });
+          break;
+
+        case "file":
+          Event.$emit("refreshData", { page: "file" });
+          break;
+
+        case "setting":
+          Event.$emit("refreshData", { page: "setting" });
+          break;
+        default:
+          break;
+      }
     },
 
-    components: {
-        home,
-        work,
-        file,
-        setting
-    },
+    readme() {
+      switch (this.bottomNav) {
+        case "home":
+          Event.$emit("readme", { page: "home" });
+          break;
 
-    methods: {
+        case "work":
+          Event.$emit("readme", { page: "work" });
+          break;
 
-        goBack() {
-            this.$router.go(-1);
-        },
+        case "file":
+          Event.$emit("readme", { page: "file" });
+          break;
 
-        login() {
-            this.$router.push('/');
-        },
-        // 导航事件
-        handleChange(val) {
-
-            this.bottomNav = val;
-
-            this.$store.commit('SET_MIAN_PAGE', val);
-
-            switch (val) {
-                case 'home':
-                    this.currentView = home;
-                    this.mainTitle = '管理面板';
-                    break;
-                case 'work':
-                    this.currentView = work;
-                    this.mainTitle = '进行中';
-                    break;
-                case 'file':
-                    this.currentView = file;
-                    this.mainTitle = '文件管理';
-                    break;
-                case 'setting':
-                    this.currentView = setting;
-                    this.mainTitle = '系统设置';
-                    break;
-                default:
-                    this.currentView = home;
-                    this.mainTitle = '管理面板';
-                    break;
-            }
-        },
-        // 抽屉显示隐藏
-        toggle(flag) {
-            this.open = !this.open
-            this.docked = !flag
-        },
-        //////////////////////////////////////////////////////////////////////////////////////////
-        // 菜单事件
-        // 1.分享二维码
-        shareQrcode() {
-            this.$router.push({ name: 'share', params: { page: 'role' } });
-        },
-        // 2.问题反馈
-        facebackToMe() {
-            this.$router.push('/connect');
-        },
-        // 3.使用说明
-        howToUseIt() {
-            this.$router.push('/note');
-        },
-        // 4.退出登陆
-        loginOut() {
-
-            sessionStorage.removeItem('accessToken');
-
-            this.$router.replace('/admin/login');
-        },
-        // 4.退出程序
-        exitApp() {
-
-            // 退出微信内置浏览器
-            if (WeixinJSBridge) {
-                WeixinJSBridge.call('closeWindow');
-            }
-
-        },
-        // 
-        //////////////////////////////////////////////////////////////////////////////////////////
-
-        refresh() {
-            switch (this.bottomNav) {
-                case 'home':
-                    Event.$emit('refreshData', { page: 'home' });
-                    break;
-
-                case 'work':
-                    Event.$emit('refreshData', { page: 'work' });
-                    break;
-
-                case 'file':
-                    Event.$emit('refreshData', { page: 'file' });
-                    break;
-
-                case 'setting':
-                    Event.$emit('refreshData', { page: 'setting' });
-                    break;
-                default:
-                    break;
-            }
-        },
-
-        readme() {
-            switch (this.bottomNav) {
-                case 'home':
-                    Event.$emit('readme', { page: 'home' });
-                    break;
-
-                case 'work':
-                    Event.$emit('readme', { page: 'work' });
-                    break;
-
-                case 'file':
-                    Event.$emit('readme', { page: 'file' });
-                    break;
-
-                case 'setting':
-                    Event.$emit('readme', { page: 'setting' });
-                    break;
-                default:
-                    break;
-            }
-        }
-
-
+        case "setting":
+          Event.$emit("readme", { page: "setting" });
+          break;
+        default:
+          break;
+      }
     }
-}
+  }
+};
 </script>

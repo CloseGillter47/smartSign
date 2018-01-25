@@ -75,7 +75,8 @@ export default {
   },
   mounted() {
     if (this.$route.params.page) {
-      this.getAddress(false);
+      // this.getAddress(false);
+      this.value = `http://localhost:4200` + "/#/" + this.$route.params.page;
     } else {
       this.$router.go(-1);
     }
